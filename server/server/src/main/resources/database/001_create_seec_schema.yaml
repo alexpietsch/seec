@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: seec-001
+      author: alexpietsch
+      changes:
+        - sql:
+            dbms: postgresql
+            endDelimiter: ;
+            sql: CREATE SCHEMA IF NOT EXISTS seec

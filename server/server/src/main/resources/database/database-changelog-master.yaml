@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: database/001_create_seec_schema.yaml
+  - include:
+      file: database/002_create_secret_table.yaml
