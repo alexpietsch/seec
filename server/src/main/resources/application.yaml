@@ -1,0 +1,28 @@
+spring:
+    application:
+        name: Seec
+    liquibase:
+        enabled: true
+        change-log: classpath:database/database-changelog-master.yaml
+#        default-schema: seec
+
+spring.datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+        maximum-pool-size: 10
+        minimum-idle: 2
+        max-lifetime: 1800000
+        idle-timeout: 600000
+        connection-timeout: 30000
+        pool-name: HikariCP
+        data-source-properties:
+            cachePrepStmts: false
+            useServerPrepStmts: false
+            prepStmtCacheSize: 250
+            prepStmtCacheSqlLimit: 2048
+            useLocalSessionState: true
+            rewriteBatchedStatements: true
+            cacheResultSetMetadata: true
+            cacheServerConfiguration: true
+            elideSetAutoCommits: true
+            maintainTimeStats: false
