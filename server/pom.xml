@@ -6,7 +6,7 @@
 
     <groupId>dev.alexpts</groupId>
     <artifactId>seec-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
