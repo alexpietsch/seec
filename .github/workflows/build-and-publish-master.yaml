@@ -27,7 +27,6 @@ jobs:
       - name: Build and publish frontend Docker image
         run: |
           docker build -t ghcr.io/alexpietsch/seec-frontend:latest -t ghcr.io/alexpietsch/seec-frontend:${{steps.version.outputs.APPVERSION}} ./frontend
-          docker run ghcr.io/alexpietsch/seec-frontend:latest
           docker push ghcr.io/alexpietsch/seec-frontend --all-tags
 
   build-and-publish-server:
@@ -52,5 +51,4 @@ jobs:
       - name: Build and publish server Docker image
         run: |
           docker build -t ghcr.io/alexpietsch/seec-server:latest -t ghcr.io/alexpietsch/seec-server:${{steps.version.outputs.APPVERSION}} ./server
-          docker run ghcr.io/alexpietsch/seec-server:latest
           docker push ghcr.io/alexpietsch/seec-server --all-tags
