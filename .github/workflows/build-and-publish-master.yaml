@@ -29,3 +29,28 @@ jobs:
           docker build -t ghcr.io/alexpietsch/seec-frontend:latest -t ghcr.io/alexpietsch/seec-frontend:${{steps.version.outputs.APPVERSION}} ./frontend
           docker run ghcr.io/alexpietsch/seec-frontend:latest
           docker push ghcr.io/alexpietsch/seec-frontend --all-tags
+
+  build-and-publish-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          APPVERSION=$(grep 'version:' seec.config | awk '{print $2}')
+          echo "appversion=$APPVERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish server Docker image
+        run: |
+          docker build -t ghcr.io/alexpietsch/seec-server:latest -t ghcr.io/alexpietsch/seec-server:${{steps.version.outputs.APPVERSION}} ./server
+          docker run ghcr.io/alexpietsch/seec-server:latest
+          docker push ghcr.io/alexpietsch/seec-server --all-tags
