@@ -1,6 +1,7 @@
 import { SecretHandler } from "./SecretHandler"
 import { Simulate } from "react-dom/test-utils"
 import encrypted = Simulate.encrypted
+import { SEEC_API_URL } from "@utils/constants"
 
 export type SecretAPIMessage = {
 	secret: string
@@ -27,7 +28,7 @@ async function postSecretRaw(
 	secretAPIRequest: SecretAPIMessage,
 ): Promise<Response> {
 	// @ts-ignore
-	return fetch(`${import.meta.env.VITE_SECRETS_API}/secret`, {
+	return fetch(`${SEEC_API_URL}/secret`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -38,7 +39,7 @@ async function postSecretRaw(
 
 async function getSecretRaw(id: string): Promise<Response> {
 	// @ts-ignore
-	return fetch(`${import.meta.env.VITE_SECRETS_API}/secret/${id}`, {
+	return fetch(`${SEEC_API_URL}/secret/${id}`, {
 		headers: {
 			"Content-Type": "application/json",
 		},
