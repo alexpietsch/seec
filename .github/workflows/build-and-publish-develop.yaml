@@ -1,0 +1,69 @@
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build-and-publish-frontend-develop:
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+
+      - name: Get version
+        id: version
+        run: |
+          APPVERSION=$(grep 'version:' seec.config | awk '{print $2}')
+          echo "appversion=$APPVERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish frontend Docker image
+        run: |
+          docker build -t ghcr.io/alexpietsch/seec-frontend:develop-latest -t ghcr.io/alexpietsch/seec-frontend:develop-${{steps.version.outputs.APPVERSION}} ./frontend
+          docker push ghcr.io/alexpietsch/seec-frontend --all-tags
+
+  build-and-publish-server-develop:
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+
+      - name: Get version
+        id: version
+        run: |
+          APPVERSION=$(grep 'version:' seec.config | awk '{print $2}')
+          echo "appversion=$APPVERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish server Docker image DEVELOP
+        run: |
+          docker build -t ghcr.io/alexpietsch/seec-server:develop-latest -t ghcr.io/alexpietsch/seec-server:develop-${{steps.version.outputs.APPVERSION}} ./server
+          docker push ghcr.io/alexpietsch/seec-server --all-tags
