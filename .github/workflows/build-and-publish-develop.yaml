@@ -1,11 +1,10 @@
-name: Build and publish master
+name: Build and publish develop
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch: {}
 
 jobs:
-  build-and-publish-frontend:
+  build-and-publish-frontend-develop:
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -16,6 +15,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: develop
 
       - name: Get version
         id: version
@@ -32,10 +33,11 @@ jobs:
 
       - name: Build and publish frontend Docker image
         run: |
-          docker build -t ghcr.io/alexpietsch/seec-frontend:latest -t ghcr.io/alexpietsch/seec-frontend:${{steps.version.outputs.APPVERSION}} ./frontend
+          docker build -t ghcr.io/alexpietsch/seec-frontend:develop-latest -t ghcr.io/alexpietsch/seec-frontend:develop-${{steps.version.outputs.APPVERSION}} ./frontend
           docker push ghcr.io/alexpietsch/seec-frontend --all-tags
 
-  build-and-publish-server:
+  build-and-publish-server-develop:
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -46,6 +48,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: develop
 
       - name: Get version
         id: version
@@ -60,7 +64,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and publish server Docker image
+      - name: Build and publish server Docker image DEVELOP
         run: |
-          docker build -t ghcr.io/alexpietsch/seec-server:latest -t ghcr.io/alexpietsch/seec-server:${{steps.version.outputs.APPVERSION}} ./server
+          docker build -t ghcr.io/alexpietsch/seec-server:develop-latest -t ghcr.io/alexpietsch/seec-server:develop-${{steps.version.outputs.APPVERSION}} ./server
           docker push ghcr.io/alexpietsch/seec-server --all-tags
