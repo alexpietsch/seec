@@ -1,14 +1,14 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["./src/*"],
-            "@utils/*": ["./src/utils/*"]
-        },
-        "target": "ES5",
-        "lib": ["ES2015", "DOM"],
-        "jsx": "react",
-        "allowSyntheticDefaultImports": true,
-        "resolveJsonModule": true
-    }
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@utils/*": ["./src/utils/*"]
+		},
+		"target": "ES5",
+		"lib": ["ES2015", "DOM"],
+		"jsx": "react",
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true
+	}
 }

@@ -1,34 +1,37 @@
 {
-  "submit": "Submit",
-  "secretId": "Secret ID",
-  "secret": "Secret",
-  "open": "Open",
-  "loading": "Loading...",
-  "navbar": {
-    "home": "Home",
-    "openSecret": "View Secret"
-  },
-  "encryptSecret": {
-    "secretInputTitle": "Secret to encrypt",
-    "passwordInputTitle": "Password",
-    "showPassword": "Show",
-    "hidePassword": "Hide"
-  },
-  "decryptSecret": {
-    "passwordInputTitle": "Please enter the password to decrypt the secret:",
-    "decrypt": "Decrypt"
-  },
-  "secretSavedDialog": {
-    "shareYourSecret": "Share your Secret",
-    "savedSecretId": "Your Secret ID:",
-    "shareLink": "Share your Secret with this link:"
-  },
-  "errors": {
-    "secretTooLong": "Currently only a maximum length of {{maxLen}} characters is supported",
-    "passwordTooShort": "The password must be at least 8 characters long",
-    "passwordsDoNotMatch": "The passwords do not match",
-    "toast": {
-      "retry": "Retry"
-    }
-  }
+	"submit": "Submit",
+	"secretId": "Secret ID",
+	"secret": "Secret",
+	"open": "Open",
+	"loading": "Loading...",
+	"navbar": {
+		"home": "Home",
+		"openSecret": "View Secret"
+	},
+	"encryptSecret": {
+		"secretInputTitle": "Secret to encrypt",
+		"passwordInputTitle": "Password",
+		"confirmPasswordInputTitle": "Confirm password"
+	},
+	"decryptSecret": {
+		"passwordInputTitle": "Please enter the password to decrypt the secret:",
+		"decrypt": "Decrypt"
+	},
+	"secretSavedDialog": {
+		"shareYourSecret": "Share your Secret",
+		"savedSecretId": "Your Secret ID:",
+		"shareLink": "Share your Secret with this link:"
+	},
+	"altText": {
+		"showPassword": "Show password",
+		"hidePassword": "Hide password"
+	},
+	"errors": {
+		"secretTooLong": "Currently only a maximum length of {{maxLen}} characters is supported",
+		"passwordTooShort": "The password must be at least 8 characters long",
+		"passwordsDoNotMatch": "The passwords do not match",
+		"toast": {
+			"retry": "Retry"
+		}
+	}
 }

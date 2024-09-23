@@ -1,34 +1,37 @@
 {
-  "submit": "Absenden",
-  "secretId": "Secret ID",
-  "secret": "Secret",
-  "open": "Öffnen",
-  "loading": "Lädt...",
-  "navbar": {
-    "home": "Start",
-    "openSecret": "Secret öffnen"
-  },
-  "encryptSecret": {
-    "secretInputTitle": "Zu verschlüsselndes Secret",
-    "passwordInputTitle": "Passwort",
-    "showPassword": "Anzeigen",
-    "hidePassword": "Verbergen"
-  },
-  "decryptSecret": {
-    "passwordInputTitle": "Bitte gib das Passwort ein um das Secret zu entschlüsseln:",
-    "decrypt": "Entschlüsseln"
-  },
-  "secretSavedDialog": {
-    "shareYourSecret": "Teile dein Secret",
-    "savedSecretId": "Dein Secret ID: ",
-    "shareLink": "Teile dein Secret mit diesem Link: "
-  },
-  "errors": {
-    "secretTooLong": "Aktuell wird nur eine maximale Länge von {{maxLen}} Zeichen unterstützt",
-    "passwordTooShort": "Das Passwort muss mindestens 8 Zeichen lang sein",
-    "passwordsDontMatch": "Die Passwörter stimmen nicht überein",
-    "toast": {
-      "retry": "Erneut versuchen"
-    }
-  }
+	"submit": "Absenden",
+	"secretId": "Secret ID",
+	"secret": "Secret",
+	"open": "Öffnen",
+	"loading": "Lädt...",
+	"navbar": {
+		"home": "Start",
+		"openSecret": "Secret öffnen"
+	},
+	"encryptSecret": {
+		"secretInputTitle": "Zu verschlüsselndes Secret",
+		"passwordInputTitle": "Passwort",
+		"confirmPasswordInputTitle": "Passwort wiederholen"
+	},
+	"decryptSecret": {
+		"passwordInputTitle": "Bitte gib das Passwort ein um das Secret zu entschlüsseln:",
+		"decrypt": "Entschlüsseln"
+	},
+	"secretSavedDialog": {
+		"shareYourSecret": "Teile dein Secret",
+		"savedSecretId": "Dein Secret ID: ",
+		"shareLink": "Teile dein Secret mit diesem Link: "
+	},
+	"altText": {
+		"showPassword": "Passwort anzeigen",
+		"hidePassword": "Passwort verbergen"
+	},
+	"errors": {
+		"secretTooLong": "Aktuell wird nur eine maximale Länge von {{maxLen}} Zeichen unterstützt",
+		"passwordTooShort": "Das Passwort muss mindestens 8 Zeichen lang sein",
+		"passwordsDontMatch": "Die Passwörter stimmen nicht überein",
+		"toast": {
+			"retry": "Erneut versuchen"
+		}
+	}
 }

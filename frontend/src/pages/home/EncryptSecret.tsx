@@ -173,7 +173,7 @@ function EncryptSecret() {
 										<FormLabel>
 											<p className="text-xl">
 												{t(
-													"encryptSecret.passwordInputTitle",
+													"encryptSecret.confirmPasswordInputTitle",
 												)}
 											</p>
 										</FormLabel>
