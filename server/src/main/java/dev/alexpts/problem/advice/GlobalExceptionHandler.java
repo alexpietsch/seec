@@ -11,7 +11,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler implements DefaultThrowableProblemAdviceTrait  {
+
+    @Override
+    public String getModuleIdentifier() {
+        return "Global";
+    }
 
     @ExceptionHandler(NoResourceFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
@@ -29,7 +34,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<DefaultErrorResponse> otherExceptions(Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 new DefaultErrorResponse()
-                        .errorCode(500)
+                        .httpCode(500)
                         .errorMessage("Internal server error")
                         .errorCode(ProblemErrorCodes.GENERIC_INTERNAL_SERVER_ERROR.getErrorCode()));
     }
