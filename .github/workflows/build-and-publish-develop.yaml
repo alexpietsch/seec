@@ -1,3 +1,4 @@
+name: Build and publish develop
 on:
   workflow_dispatch: {}
 
