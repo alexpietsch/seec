@@ -6,7 +6,7 @@ type DefaultErrorResponse = {
 	errorCode: number
 }
 
-async function checkForDefaultError(response: Response) {
+async function isDefaultError(response: Response) {
 	const data = await response.clone().json()
 	if (
 		data &&
@@ -20,7 +20,7 @@ async function checkForDefaultError(response: Response) {
 
 async function getErrorMessage(response: Response) {
 	const data = await response.clone().json()
-	if (checkForDefaultError(response)) {
+	if (isDefaultError(response)) {
 		const errorResponse = data as DefaultErrorResponse
 		return `${errorResponse.title} - ${errorResponse.detail} (Error code ${errorResponse.errorCode})`
 	}

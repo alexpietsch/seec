@@ -10,7 +10,6 @@ import {
 	FormMessage,
 } from "@/components/ui/form"
 import React, { useState } from "react"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { postSecret } from "@utils/secretsAPI"
@@ -21,15 +20,12 @@ import {
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog"
 import { useToast } from "@/hooks/use-toast"
 import { ToastAction } from "@/components/ui/toast"
 import { getErrorMessage } from "@utils/handleDefaultErrorResponse"
 import { t } from "i18next"
 import PasswordInput from "@/components/PasswordInput"
-import { Simulate } from "react-dom/test-utils"
-import reset = Simulate.reset
 
 const MAX_SECRET_LENGTH = 5000
 
@@ -101,7 +97,6 @@ function EncryptSecret() {
 		if (values.password !== values.confirmPassword) {
 			return
 		}
-		console.log(values)
 		// TODO: Error handling
 		const res = await postSecretAction(values)
 	}
@@ -173,7 +168,7 @@ function EncryptSecret() {
 										<FormLabel>
 											<p className="text-xl">
 												{t(
-													"encryptSecret.passwordInputTitle",
+													"encryptSecret.confirmPasswordInputTitle",
 												)}
 											</p>
 										</FormLabel>

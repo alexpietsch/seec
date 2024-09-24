@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { t } from "i18next"
 import React, { useState } from "react"
 import { ControllerRenderProps, FieldValues } from "react-hook-form"
+import { hideIcon, showIcon } from "@/assets/icons"
 
 function PasswordInput({
 	field,
@@ -34,13 +35,24 @@ function PasswordInput({
 			<Input {...field} type={showPassword ? "text" : "password"} />
 			{withShowButton && (
 				<Button
-					className="w-1/5 pl-3"
+					className="w-fit p-2"
 					type="button"
+					variant="outlineDark"
 					onClick={() => setShowPassword(!showPassword)}
 				>
-					{showPassword
-						? t("encryptSecret.hidePassword")
-						: t("encryptSecret.showPassword")}
+					{showPassword ? (
+						<img
+							src={hideIcon.url}
+							alt={t(hideIcon.alt)}
+							width="32px"
+						/>
+					) : (
+						<img
+							src={showIcon.url}
+							alt={t(showIcon.alt)}
+							width="32px"
+						/>
+					)}
 				</Button>
 			)}
 		</div>
