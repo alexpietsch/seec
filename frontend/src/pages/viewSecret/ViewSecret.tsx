@@ -7,6 +7,9 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { t } from "i18next"
+import Loader from "@/components/Loader"
+import { getErrorMessage } from "@/utils/handleDefaultErrorResponse"
+import { useToast } from "@/hooks/use-toast"
 
 export function ViewSecret() {
 	let { secretId } = useParams()
@@ -16,6 +19,7 @@ export function ViewSecret() {
 		useState<string>(null)
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState("")
+	const { toast } = useToast()
 	const secretHandler = new SecretHandler()
 
 	if (!secretId) {
@@ -24,14 +28,24 @@ export function ViewSecret() {
 
 	async function fetchSecret() {
 		const response = await getSecret(secretId)
+
 		if (response && !response.ok) {
 			if (response.status === 404) {
 				setLoading(false)
-				setError(`Secret with id "${secretId}" not found`)
+				toast({
+					duration: 30000,
+					variant: "destructive",
+					title: t("errors.couldNotFindSecret"),
+					description: await getErrorMessage(response),
+				})
+				setError(" ")
+				return
 			}
+			setLoading(false)
+			setError("Failed to fetch secret")
 			return
 		}
-		console.log(response)
+
 		if (response && response.status === 200) {
 			setSecret(await response.json())
 			setLoading(false)
@@ -43,29 +57,31 @@ export function ViewSecret() {
 	}, [])
 
 	async function decryptSecret() {
-		console.log(secret)
 		if (!secret || !password) {
 			return
 		}
 		await secretHandler
 			.decrypt(secret.secret, password, secret.iv)
-			.then((secret) => {
-				if (secret.success) {
+			.then((secretResponse) => {
+				if (secretResponse.success) {
 					setError("")
-					setDecryptedSecretMessage(secret.secret)
+					setDecryptedSecretMessage(secretResponse.secret)
 				} else {
-					setError("Failed to decrypt secret")
+					toast({
+						duration: 30000,
+						variant: "destructive",
+						title: t("errors.failedToDecryptSecret"),
+						description: t("errors.incorrectPassword"),
+					})
 				}
 			})
 	}
 
 	return (
 		<div className="m-3 space-y-2">
-			{loading && <div>{t("loading")}</div>}
-			{error && (
-				<div className="text-red-500 text-2xl font-bold">{error}</div>
-			)}
-			{!loading && (
+			{loading && <Loader />}
+			{error && <div className="text-red-500 font-bold">{error}</div>}
+			{!loading && !error && (
 				<>
 					<p>{t("decryptSecret.passwordInputTitle")}</p>
 					<Input

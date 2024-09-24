@@ -30,6 +30,9 @@
 		"secretTooLong": "Currently only a maximum length of {{maxLen}} characters is supported",
 		"passwordTooShort": "The password must be at least 8 characters long",
 		"passwordsDoNotMatch": "The passwords do not match",
+		"couldNotFindSecret": "Could not find secret",
+		"failedToDecryptSecret": "Failed to decrypt secret",
+		"incorrectPassword": "The password may be incorrect.",
 		"toast": {
 			"retry": "Retry"
 		}

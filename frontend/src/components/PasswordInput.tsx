@@ -37,6 +37,7 @@ function PasswordInput({
 				<Button
 					className="w-fit p-2"
 					type="button"
+					variant="outlineDark"
 					onClick={() => setShowPassword(!showPassword)}
 				>
 					{showPassword ? (
@@ -58,6 +59,4 @@ function PasswordInput({
 	)
 }
 
-// ? t("encryptSecret.hidePassword") // :
-// t("encryptSecret.showPassword")
 export default PasswordInput
