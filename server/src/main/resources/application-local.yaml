@@ -5,3 +5,6 @@ logging:
   level:
     liquibase: INFO
     org.springframework.web: DEBUG
+
+spring.datasource.hikari:
+  connection-timeout: 5000
