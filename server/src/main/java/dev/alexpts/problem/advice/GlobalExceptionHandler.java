@@ -1,7 +1,10 @@
 package dev.alexpts.problem.advice;
 
 import dev.alexpts.problem.ProblemErrorCodes;
+import dev.alexpts.problem.problems.ServiceUnavailableProblem;
 import dev.alexpts.seec.model.DefaultErrorResponse;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
-public class GlobalExceptionHandler implements DefaultThrowableProblemAdviceTrait  {
+@Log4j2
+public class GlobalExceptionHandler implements DefaultThrowableProblemAdviceTrait {
 
     @Override
     public String getModuleIdentifier() {
@@ -37,5 +41,13 @@ public class GlobalExceptionHandler implements DefaultThrowableProblemAdviceTrai
                         .httpCode(500)
                         .errorMessage("Internal server error")
                         .errorCode(ProblemErrorCodes.GENERIC_INTERNAL_SERVER_ERROR.getErrorCode()));
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    @ResponseStatus(value = HttpStatus.SERVICE_UNAVAILABLE)
+    public ResponseEntity<ServiceUnavailableProblem> databaseConnectionExceptionHandler(DataAccessException e) {
+        log.error("Database connection error", e);
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(
+                new ServiceUnavailableProblem(ProblemErrorCodes.DATABASE_CONNECTION_ERROR));
     }
 }
