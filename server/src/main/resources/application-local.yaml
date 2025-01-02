@@ -6,5 +6,10 @@ logging:
     liquibase: INFO
     org.springframework.web: DEBUG
 
-spring.datasource.hikari:
-  connection-timeout: 5000
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/seec
+  username: seec
+  password: seec-pw
+  hikari:
+    connection-timeout: 5000
+    spring:
