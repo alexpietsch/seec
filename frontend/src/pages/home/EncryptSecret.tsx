@@ -26,6 +26,10 @@ import { ToastAction } from "@/components/ui/toast"
 import { getErrorMessage } from "@utils/handleDefaultErrorResponse"
 import { t } from "i18next"
 import PasswordInput from "@/components/PasswordInput"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { EXPIRE_DURATION, EXPIRE_DURATION_TYPE, EXPIRE_DURATIONS, EXPIRE_MAX, EXPIRE_MIN } from "@/utils/constants"
+import { Input } from "@/components/ui/input"
+import calcExpireDate from "@/utils/calcExpireDate"
 
 const MAX_SECRET_LENGTH = 5000
 
@@ -41,6 +45,12 @@ function EncryptSecret() {
 					maxLen: MAX_SECRET_LENGTH,
 				}),
 			}),
+			expireAtAmount: z.string().min(EXPIRE_MIN, {
+				message: t("errors.numberTooSmall", {minLen: EXPIRE_MIN}),
+			}).max(EXPIRE_MAX, {
+				message: t("errors.numberTooBig", {maxLen: EXPIRE_MAX}),
+			}),
+			expireAtDuration: z.enum(EXPIRE_DURATION),
 			password: z.string().min(8, {
 				message: t("errors.passwordTooShort"),
 			}),
@@ -61,6 +71,8 @@ function EncryptSecret() {
 			secret: "",
 			password: "",
 			confirmPassword: "",
+			expireAtDuration: null,
+			expireAtAmount: null
 		},
 	})
 
@@ -70,7 +82,7 @@ function EncryptSecret() {
 		if (values.password !== values.confirmPassword) {
 			return
 		}
-		const response = await postSecret(values.secret, values.password)
+		const response = await postSecret(values.secret, values.password, calcExpireDate(values.expireAtDuration, values.expireAtAmount))
 
 		if (!response.ok) {
 			toast({
@@ -135,6 +147,57 @@ function EncryptSecret() {
 							</FormItem>
 						)}
 					/>
+					<div className="flex w-4/5 items-end">
+						<div className="w-1/4">
+						<FormField
+							control={form.control}
+							name="expireAtAmount"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										<p className="text-xl">
+											{t("encryptSecret.selectExpireDuration")}
+										</p>
+									</FormLabel>
+									<FormControl>
+										<Input {...field} type="number" min={EXPIRE_MIN} max={EXPIRE_MAX} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						</div>
+						
+						<div className="pl-5 w-full">
+							<FormField
+								control={form.control}
+								name="expireAtDuration"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>
+											<p className="text-xl">
+												{t("encryptSecret.selectExpireDuration")}
+											</p>
+										</FormLabel>
+										<FormControl>
+										<Select onValueChange={field.onChange} defaultValue={field.value}>
+											<SelectTrigger>
+												<SelectValue placeholder={t("encryptSecret.selectExpireDuration")} />
+											</SelectTrigger>
+											<SelectContent>
+												{EXPIRE_DURATIONS.map((expireDuration) => (
+													<SelectItem value={expireDuration.duration}>{t(expireDuration.name)}</SelectItem>
+												))}
+											</SelectContent>
+											</Select>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						
+					</div>
 
 					<div className="flex items-end">
 						<div className="w-4/5">
