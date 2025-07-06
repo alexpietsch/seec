@@ -45,11 +45,10 @@ function EncryptSecret() {
 					maxLen: MAX_SECRET_LENGTH,
 				}),
 			}),
-			expireAtAmount: z.number().min(EXPIRE_MIN, {
-				message: t("errors.numberTooSmall", { min: EXPIRE_MIN }),
-			}).max(EXPIRE_MAX, {
-				message: t("errors.numberTooBig", { max: EXPIRE_MAX }),
-			}),
+			expireAtAmount: z.string()
+				.transform((val) => Number(val))
+				.pipe(z.number().min(EXPIRE_MIN).max(EXPIRE_MAX))
+				.or(z.literal("").transform(() => null)),
 			expireAtDuration: z.enum(EXPIRE_DURATION),
 			password: z.string().min(8, {
 				message: t("errors.passwordTooShort"),

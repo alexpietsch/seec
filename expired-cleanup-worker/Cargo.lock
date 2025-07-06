@@ -170,7 +170,7 @@ dependencies = [
 
 [[package]]
 name = "expired-cleanup-worker"
-version = "0.3.1"
+version = "0.3.2"
 dependencies = [
  "chrono",
  "postgres",
