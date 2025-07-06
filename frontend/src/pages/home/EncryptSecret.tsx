@@ -131,62 +131,61 @@ function EncryptSecret() {
 									</p>
 								</FormLabel>
 								<FormControl>
-									<>
+									<div>
 										<Textarea
 											{...field}
 											className="resize-none"
 											rows={15}
 											maxLength={MAX_SECRET_LENGTH}
 										/>
-										{(watch("secret")
+										{`${watch("secret")
 											? watch("secret").length
-											: "0") + `/${MAX_SECRET_LENGTH}`}
-									</>
+											: "0"}/${MAX_SECRET_LENGTH}`}
+									</div>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
-					<div className="flex w-4/5 items-end">
-						<div className="w-1/4">
+
+					<div className="space-y-3 w-4/5">
+						<FormLabel>
+							<p className="text-xl">{t('encryptSecret.autoExpireAt')}</p>
+						</FormLabel>
+						<div className="flex gap-3 items-start">
 							<FormField
 								control={form.control}
 								name="expireAtAmount"
 								render={({ field }) => (
-									<FormItem>
-										<FormLabel>
-											<p className="text-xl">
-												{t("encryptSecret.selectExpireAmount")}
-											</p>
-										</FormLabel>
+									<FormItem className="w-24">
 										<FormControl>
-											<Input {...field} type="number" min={EXPIRE_MIN} max={EXPIRE_MAX} />
+											<Input
+												{...field}
+												type="number"
+												min={EXPIRE_MIN}
+												max={EXPIRE_MAX}
+												placeholder="1"
+											/>
 										</FormControl>
 										<FormMessage />
 									</FormItem>
 								)}
 							/>
-						</div>
-
-						<div className="pl-5 w-full">
 							<FormField
 								control={form.control}
 								name="expireAtDuration"
 								render={({ field }) => (
-									<FormItem>
-										<FormLabel>
-											<p className="text-xl">
-												{t("encryptSecret.selectExpireDuration")}
-											</p>
-										</FormLabel>
+									<FormItem className="flex-1">
 										<FormControl>
 											<Select onValueChange={field.onChange} defaultValue={field.value}>
 												<SelectTrigger>
-													<SelectValue placeholder={t("encryptSecret.selectExpireDuration")} />
+													<SelectValue placeholder="Zeitraum wählen" />
 												</SelectTrigger>
 												<SelectContent>
 													{EXPIRE_DURATIONS.map((expireDuration) => (
-														<SelectItem value={expireDuration.duration}>{t(expireDuration.name)}</SelectItem>
+														<SelectItem key={expireDuration.duration} value={expireDuration.duration}>
+															{t(expireDuration.name)}
+														</SelectItem>
 													))}
 												</SelectContent>
 											</Select>
@@ -196,8 +195,8 @@ function EncryptSecret() {
 								)}
 							/>
 						</div>
-
 					</div>
+
 
 					<div className="flex items-end">
 						<div className="w-4/5">
@@ -255,7 +254,7 @@ function EncryptSecret() {
 			</Form>
 
 			<Dialog
-				open={savedSecretId != ""}
+				open={savedSecretId !== ""}
 				onOpenChange={(b) => {
 					if (b === false) {
 						setSavedSecretId("")
@@ -284,7 +283,7 @@ function EncryptSecret() {
 					</DialogHeader>
 				</DialogContent>
 			</Dialog>
-		</div>
+		</div >
 	)
 }
 
