@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: seec-003
+      author: alexpietsch
+      changes:
+        - modifyDataType:
+            schemaName: seec
+            tableName: secret
+            columnName: auto_expire_at
+            newDataType: timestamptz
+        - modifyDataType:
+            schemaName: seec
+            tableName: secret
+            columnName: created_at
+            newDataType: timestamptz

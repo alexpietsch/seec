@@ -3,3 +3,5 @@ databaseChangeLog:
       file: database/001_create_seec_schema.yaml
   - include:
       file: database/002_create_secret_table.yaml
+  - include:
+      file: database/003_change_to_timestamps_with_timezone.yaml

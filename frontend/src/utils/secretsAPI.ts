@@ -11,12 +11,12 @@ export type SecretAPIMessage = {
 
 const secretHandler = new SecretHandler()
 
-async function postSecret(secret: string, password: string): Promise<Response> {
+async function postSecret(secret: string, password: string, expireAt: Date | null): Promise<Response> {
 	const encryptedSecret = await secretHandler.encrypt(secret, password)
 	return await postSecretRaw({
 		secret: encryptedSecret.secret,
 		iv: encryptedSecret.iv,
-		auto_expire_at: new Date().toISOString(),
+		auto_expire_at: expireAt.toISOString(),
 	})
 }
 

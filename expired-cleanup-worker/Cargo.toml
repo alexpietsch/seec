@@ -1,0 +1,8 @@
+[package]
+name = "expired-cleanup-worker"
+version = "0.3.0"
+edition = "2024"
+
+[dependencies]
+postgres = "0.19.10"
+chrono = "0.4.41"

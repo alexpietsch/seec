@@ -11,7 +11,13 @@
 	"encryptSecret": {
 		"secretInputTitle": "Secret to encrypt",
 		"passwordInputTitle": "Password",
-		"confirmPasswordInputTitle": "Confirm password"
+		"confirmPasswordInputTitle": "Confirm password",
+		"autoExpireAt": "Automatically delete after",
+		"durationMinute": "minute(s)",
+		"durationHour": "hour(s)",
+		"durationDay": "day(s)",
+		"durationWeek": "week(s)",
+		"durationMonth": "month(s)"
 	},
 	"decryptSecret": {
 		"passwordInputTitle": "Please enter the password to decrypt the secret:",
@@ -33,6 +39,8 @@
 		"couldNotFindSecret": "Could not find secret",
 		"failedToDecryptSecret": "Failed to decrypt secret",
 		"incorrectPassword": "The password may be incorrect.",
+		"numberTooSmall": "Please enter a number greater than {{minLen}}.",
+		"numberTooBig": "Please enter a number smaller than {{maxLen}}.",
 		"toast": {
 			"retry": "Retry"
 		}
