@@ -27,7 +27,7 @@ import { getErrorMessage } from "@utils/handleDefaultErrorResponse"
 import { t } from "i18next"
 import PasswordInput from "@/components/PasswordInput"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { EXPIRE_DURATION, EXPIRE_DURATION_TYPE, EXPIRE_DURATIONS, EXPIRE_MAX, EXPIRE_MIN } from "@/utils/constants"
+import { EXPIRE_DURATION, type EXPIRE_DURATION_TYPE, EXPIRE_DURATIONS, EXPIRE_MAX, EXPIRE_MIN } from "@/utils/constants"
 import { Input } from "@/components/ui/input"
 import calcExpireDate from "@/utils/calcExpireDate"
 
@@ -46,9 +46,10 @@ function EncryptSecret() {
 				}),
 			}),
 			expireAtAmount: z.string()
-				.transform((val) => Number(val))
-				.pipe(z.number().min(EXPIRE_MIN).max(EXPIRE_MAX))
-				.or(z.literal("").transform(() => null)),
+				.min(1, { message: t("errors.expireAmountRequired") })
+				.refine((val) => !isNaN(Number(val)) && Number(val) >= EXPIRE_MIN && Number(val) <= EXPIRE_MAX, {
+					message: t("errors.expireAmountInvalid", { min: EXPIRE_MIN, max: EXPIRE_MAX })
+				}),
 			expireAtDuration: z.enum(EXPIRE_DURATION),
 			password: z.string().min(8, {
 				message: t("errors.passwordTooShort"),
@@ -70,11 +71,10 @@ function EncryptSecret() {
 			secret: "",
 			password: "",
 			confirmPassword: "",
-			expireAtDuration: null,
-			expireAtAmount: null
+			expireAtDuration: EXPIRE_DURATIONS[1].duration as EXPIRE_DURATION_TYPE,
+			expireAtAmount: "1"
 		},
 	})
-
 	const { watch, reset } = form
 
 	const postSecretAction = async (values: SecretFormSchema) => {
@@ -109,7 +109,7 @@ function EncryptSecret() {
 			return
 		}
 		// TODO: Error handling
-		const res = await postSecretAction(values)
+		await postSecretAction(values)
 	}
 
 	return (
@@ -176,7 +176,7 @@ function EncryptSecret() {
 								render={({ field }) => (
 									<FormItem className="flex-1">
 										<FormControl>
-											<Select onValueChange={field.onChange} defaultValue={field.value}>
+											<Select onValueChange={field.onChange} value={field.value}>
 												<SelectTrigger>
 													<SelectValue placeholder="Zeitraum wählen" />
 												</SelectTrigger>
