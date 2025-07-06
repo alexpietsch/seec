@@ -11,7 +11,8 @@ Add a service entry to your `docker-compose.yaml` and pass the same `SPRING_DATA
     image: ghcr.io/alexpietsch/expired-cleanup-worker:latest
     depends_on:
       - backend
-    command: ["${SPRING_DATASOURCE_URL}"]
+    command: ["SPRING_DATASOURCE_URL"]
 ```
 
-`SPRING_DATASOURCE_URL` must be set to a valid PostgreSQL connection string (e.g. `jdbc:postgresql://db:5432/seec?user=seec&password=seec-pw`). The worker will periodically remove entries whose `auto_expire_at` has passed.
+`SPRING_DATASOURCE_URL` must be set to a valid PostgreSQL connection string (e.g. `jdbc:postgresql://db:5432/seec?user=seec&password=seec-pw`). 
+The worker will periodically remove entries whose `auto_expire_at` has passed.
