@@ -1,4 +1,4 @@
-FROM rust:1.83.0-slim AS build
+FROM rust:1.88.0-slim AS build
 
 RUN rustup target add x86_64-unknown-linux-musl && \
     apt update && \
@@ -20,7 +20,7 @@ RUN adduser \
 
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
-FROM rust:1.83-alpine3.21 AS runtime
+FROM rust:1.88-alpine3.21 AS runtime
 
 COPY --from=build /etc/passwd /etc/passwd
 COPY --from=build /etc/group /etc/group
@@ -29,4 +29,4 @@ USER rustuser:rustuser
 
 COPY --from=build --chown=rustuser:rustuser ./target/x86_64-unknown-linux-musl/release/expired-cleanup-worker /app/expired-cleanup-worker
 
-ENTRYPOINT [ "./app/expired-cleanup-worker" ]
+ENTRYPOINT [ "/app/expired-cleanup-worker" ]
