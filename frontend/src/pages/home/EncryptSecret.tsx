@@ -46,9 +46,9 @@ function EncryptSecret() {
 				}),
 			}),
 			expireAtAmount: z.string().min(EXPIRE_MIN, {
-				message: t("errors.numberTooSmall", {minLen: EXPIRE_MIN}),
+				message: t("errors.numberTooSmall", { minLen: EXPIRE_MIN }),
 			}).max(EXPIRE_MAX, {
-				message: t("errors.numberTooBig", {maxLen: EXPIRE_MAX}),
+				message: t("errors.numberTooBig", { maxLen: EXPIRE_MAX }),
 			}),
 			expireAtDuration: z.enum(EXPIRE_DURATION),
 			password: z.string().min(8, {
@@ -149,25 +149,25 @@ function EncryptSecret() {
 					/>
 					<div className="flex w-4/5 items-end">
 						<div className="w-1/4">
-						<FormField
-							control={form.control}
-							name="expireAtAmount"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>
-										<p className="text-xl">
-											{t("encryptSecret.selectExpireDuration")}
-										</p>
-									</FormLabel>
-									<FormControl>
-										<Input {...field} type="number" min={EXPIRE_MIN} max={EXPIRE_MAX} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+							<FormField
+								control={form.control}
+								name="expireAtAmount"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>
+											<p className="text-xl">
+												{t("encryptSecret.selectExpireAmount")}
+											</p>
+										</FormLabel>
+										<FormControl>
+											<Input {...field} type="number" min={EXPIRE_MIN} max={EXPIRE_MAX} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 						</div>
-						
+
 						<div className="pl-5 w-full">
 							<FormField
 								control={form.control}
@@ -180,15 +180,15 @@ function EncryptSecret() {
 											</p>
 										</FormLabel>
 										<FormControl>
-										<Select onValueChange={field.onChange} defaultValue={field.value}>
-											<SelectTrigger>
-												<SelectValue placeholder={t("encryptSecret.selectExpireDuration")} />
-											</SelectTrigger>
-											<SelectContent>
-												{EXPIRE_DURATIONS.map((expireDuration) => (
-													<SelectItem value={expireDuration.duration}>{t(expireDuration.name)}</SelectItem>
-												))}
-											</SelectContent>
+											<Select onValueChange={field.onChange} defaultValue={field.value}>
+												<SelectTrigger>
+													<SelectValue placeholder={t("encryptSecret.selectExpireDuration")} />
+												</SelectTrigger>
+												<SelectContent>
+													{EXPIRE_DURATIONS.map((expireDuration) => (
+														<SelectItem value={expireDuration.duration}>{t(expireDuration.name)}</SelectItem>
+													))}
+												</SelectContent>
 											</Select>
 										</FormControl>
 										<FormMessage />
@@ -196,7 +196,7 @@ function EncryptSecret() {
 								)}
 							/>
 						</div>
-						
+
 					</div>
 
 					<div className="flex items-end">
