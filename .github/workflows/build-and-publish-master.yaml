@@ -64,3 +64,33 @@ jobs:
         run: |
           docker build -t ghcr.io/alexpietsch/seec-server:latest -t ghcr.io/alexpietsch/seec-server:${{steps.version.outputs.APPVERSION}} ./server
           docker push ghcr.io/alexpietsch/seec-server --all-tags
+
+  build-and-publish-cleanup-worker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          APPVERSION=$(grep 'version:' seec.config | awk '{print $2}')
+          echo "appversion=$APPVERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish cleanup worker Docker image
+        run: |
+          docker build -t ghcr.io/alexpietsch/expired-cleanup-worker:latest -t ghcr.io/alexpietsch/expired-cleanup-worker:${{steps.version.outputs.APPVERSION}} ./expired-cleanup-worker
+          docker push ghcr.io/alexpietsch/expired-cleanup-worker --all-tags

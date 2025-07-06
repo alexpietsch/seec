@@ -30,6 +30,12 @@ services:
     environment:
       SPRING_DATASOURCE_URL:
 
+  cleanup-worker:
+    image: ghcr.io/alexpietsch/expired-cleanup-worker:latest
+    depends_on:
+      - backend
+    command: ["${SPRING_DATASOURCE_URL}"]
+
   frontend:
     depends_on:
       - backend
