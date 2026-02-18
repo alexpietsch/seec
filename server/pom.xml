@@ -24,7 +24,7 @@
         <swagger-ui.version>5.17.14</swagger-ui.version>
 <!--        <swagger-annotations.version>2.2.22</swagger-annotations.version>-->
         <hibernate-core.version>6.6.0.Final</hibernate-core.version>
-        <postgresql.version>42.7.4</postgresql.version>
+        <postgresql.version>42.7.7</postgresql.version>
 
 
         <liquibase-maven-plugin.version>4.19.0</liquibase-maven-plugin.version>
