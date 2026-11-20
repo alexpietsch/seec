@@ -1,4 +1,4 @@
-FROM node:22 AS base
+FROM node:26 AS base
 LABEL authors="Alexpietsch"
 
 WORKDIR /usr/src/app
